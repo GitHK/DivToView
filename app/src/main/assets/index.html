@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <script type='text/javascript' src='jquery-1.11.1.min.js'></script>
+    </head>
+    <body id = "body-tag" style="background-color: #DEDEDE;">
+
+        <div id="first" style="height: 100px; width: 100%; background-color: green;">
+        </div>
+        <div id="second" style="height: 100%; width: 100%; background-color: gray;">
+            <div id="s-top-right" style="height: 100%; width: 50%; background-color: orange; float:left;">
+
+            </div>
+            <div id="s-top-left" style="height: 100%; width: 50%; background-color: red; float:left;">
+
+            </div>
+        </div>
+        <div id="third" style="height: 100px; width: 100%; background-color: yellow;">
+        </div>
+        <div id="fourth" style="height: 100px; width: 100%; background-color: pink;">
+        </div>
+
+        <script>
+
+            var trapClick = function(handler){
+                $( handler ).click(function() {
+                    alert( "trapped click event" );
+                });
+            }
+
+            var replaceDiv = function(id){
+                var top = $(id).offset().top;
+                var left = $(id).offset().left;
+                var width = $(id).width();
+                var height = $(id).height();
+
+                Android.buildWidget(top,left,height,width);
+            }
+
+            var replaceDivPercentage = function(id){
+                //compensate for body border and margin when using percentaes
+                var top = $(id).offset().top * 100/ $("#body-tag").height();
+                var height = $(id).height() * 100/ $("#body-tag").height();
+                var left = $(id).offset().left * 100 / $("#body-tag").width();
+                var width = $(id).width() *100 / $("#body-tag").width();
+
+                Android.buildWidgetPercentage(top,left,height,width);
+            }
+
+
+            trapClick("#first");
+            trapClick("#s-top-right");
+
+            window.onload = function () {
+                replaceDiv('#s-top-right');
+                //replaceDivPercentage("#s-top-right");
+            }
+
+        </script>
+    </body>
+</html>
