@@ -1,9 +1,9 @@
 DivToView
 =========
 
-The aim of this project is to replace a div tag with and Android view.
+The aim of this project is to replace an HTML DIV tag with and Android native inflated view.
+Android wil overlap over the selected DIV a view that stretches to occupy the div's original size and position.
 
-ToDo
-----
-
-Percentage position transfer of the view is still a work in progress.
+Build
+-----
+This is and Android studio Project, just import and compile.

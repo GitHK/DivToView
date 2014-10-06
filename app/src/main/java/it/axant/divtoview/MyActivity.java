@@ -27,51 +27,15 @@ public class MyActivity extends Activity {
     }
 
     private void buildBrowser(int top, int left, final int height, final int width) {
+        float density = getResources().getDisplayMetrics().density;
         AbsoluteLayout.LayoutParams params = new AbsoluteLayout.LayoutParams(
-                width*2, height*2, left*2, top*2);
+                (int) (width*density), (int) (height*density), (int) (left*density), (int) (top*density));
         webView.addView(ViewBuilder.createExampleView(this), params);
-        Log.d("webview", "(norm)--> w"+width*2
-                +" h"+height*2
-                +" l"+left*2
-                +" t"+top*2);
-
+        Log.d("webview", "(norm)--> w"+(int)(width*density)
+                +" h"+(int)(height*density)
+                +" l"+(int)(left*density)
+                +" t"+(int)(top*density));
     }
-
-    private void buildBrowserPercentage(final float top, final float left, final float height, final float width) {
-        final Context localContext = this;
-        ViewTreeObserver viewTreeObserver  = webView.getViewTreeObserver();
-        viewTreeObserver.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                int webViewContentHeight = webView.getContentHeight();
-                int webViewContentWidth = webView.getWidth();
-
-                if( webViewContentHeight != 0 ){
-                    AbsoluteLayout.LayoutParams params = new AbsoluteLayout.LayoutParams(
-                            (int) width * webViewContentWidth / 100,
-                            (int) height * webViewContentHeight / 100 * 2,
-                            (int) left * webViewContentWidth / 100,
-                            (int) top * webViewContentHeight / 100 * 2);
-                    webView.addView(ViewBuilder.createExampleView(localContext), params);
-
-                    Log.d("webview", "(perc)--> w"+width
-                            +" h"+height
-                            +" l"+left
-                            +" t"+top);
-
-                    Log.d("webview", "(pcon)--> w"+(int) width * webViewContentWidth / 100
-                                    +" h"+(int) height * webViewContentHeight / 100 *2
-                                    +" l"+(int) left * webViewContentWidth / 100
-                                    +" t"+(int) top * webViewContentHeight / 100 *2);
-
-                    webView.getViewTreeObserver().removeOnPreDrawListener(this);
-                }
-                return false;
-            }
-        });
-    }
-
-
 
     private class WebInterface{
         Context context;
@@ -90,15 +54,6 @@ public class MyActivity extends Activity {
             });
         }
 
-        @JavascriptInterface
-        public void buildWidgetPercentage(final float top, final float left, final float height, final float width) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    buildBrowserPercentage(top, left, height, width);
-                }
-            });
-        }
     }
 
 }
